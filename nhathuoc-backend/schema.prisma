@@ -1,12 +1,14 @@
 generator client {
- provider = "prisma-client-js"
- output   = "./src/generated/client"
+  provider = "prisma-client-js"
+  output   = "./src/generated/client"
 }
+
 datasource db {
- provider = "mysql"
- url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
-// Bảng Người dùng (Chủ tiệm, Nhân viên, Khách hàng)
+
+// Bảng Người dùng
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -15,7 +17,11 @@ model User {
   role      String   @default("USER") // ADMIN, STAFF, USER
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Quan hệ: 1 User có thể có nhiều đơn hàng
+  orders    Order[]
 }
+
 model Category {
   id          Int       @id @default(autoincrement())
   name        String    // Tên danh mục (VD: Thực phẩm chức năng)
@@ -23,40 +29,88 @@ model Category {
   image       String?   // Ảnh đại diện danh mục
   description String?   @db.Text
   status      Boolean   @default(true) // Ẩn/Hiện danh mục
-  products    Product[] 
+  products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+
 model Product {
-  id              Int      @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   // --- THÔNG TIN CƠ BẢN ---
-  name            String
-  slug            String   @unique // Để làm URL đẹp: /san-pham/panadol-extra
-  categoryId      Int?     // Nếu bạn đã có model Category thì nối relation vào đây
-  price           Decimal  @db.Decimal(10, 0) // Dùng Decimal cho tiền tệ chính xác
-  original_price  Decimal? @db.Decimal(10, 0) // Giá gốc (để hiện giảm giá)
-  quantity        Int      @default(0)
-  unit            String   @default("Hộp") // Hộp, Vỉ, Chai...
-  image           String?  // Link ảnh chính
-  gallery         String?  @db.Text // Lưu JSON mảng ảnh phụ (nếu cần)
-  discount        Int      @default(0)  // % Giảm giá. Mặc định là 0
-  // --- THÔNG TIN Y TẾ CHI TIẾT (QUAN TRỌNG) ---
-  short_description String? @db.Text // Mô tả ngắn
-  description       String? @db.LongText // Mô tả chi tiết (HTML)
-  ingredients       String? @db.Text // Thành phần / Hoạt chất
-  usage_dosage      String? @db.Text // Liều dùng
-  contraindications String? @db.Text // Chống chỉ định
-  side_effects      String? @db.Text // Tác dụng phụ
+  name              String
+  slug              String    @unique // Để làm URL đẹp: /san-pham/panadol-extra
+  categoryId        Int?
+  price             Decimal   @db.Decimal(10, 0) // Dùng Decimal cho tiền tệ chính xác
+  original_price    Decimal?  @db.Decimal(10, 0) // Giá gốc (để hiện giảm giá)
+  quantity          Int       @default(0) // Số lượng tồn kho
+  unit              String    @default("Hộp") // Hộp, Vỉ, Chai...
+  image             String?   // Link ảnh chính
+  gallery           String?   @db.Text // Lưu JSON mảng ảnh phụ
+  discount          Int       @default(0) // % Giảm giá
+
+  // --- THÔNG TIN Y TẾ CHI TIẾT ---
+  short_description String?   @db.Text
+  description       String?   @db.LongText
+  ingredients       String?   @db.Text
+  usage_dosage      String?   @db.Text
+  contraindications String?   @db.Text
+  side_effects      String?   @db.Text
+
   // --- NGUỒN GỐC ---
-  manufacturer      String? // Nhà sản xuất
-  origin            String? // Xuất xứ (Việt Nam, Anh...)
-  packaging         String? // Quy cách (Hộp 10 vỉ...)
-  registration_num  String? // Số đăng ký thuốc
+  manufacturer      String?
+  origin            String?
+  packaging         String?
+  registration_num  String?
+
   // --- QUẢN TRỊ ---
-  views           Int      @default(0)
-  is_prescription Boolean  @default(false) // True = Thuốc kê đơn
-  status          Boolean  @default(true) // True = Đang bán
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  category    Category? @relation(fields: [categoryId], references: [id])
+  views             Int       @default(0)
+  is_prescription   Boolean   @default(false)
+  status            Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  category          Category? @relation(fields: [categoryId], references: [id])
+  orderItems        OrderItem[]
+}
+
+// ==========================================
+// THÊM MỚI 2 MODEL PHỤC VỤ ĐƠN HÀNG & THANH TOÁN
+// ==========================================
+
+// Bảng Đơn hàng
+model Order {
+  id              Int         @id @default(autoincrement())
+  userId          Int
+  user            User        @relation(fields: [userId], references: [id])
+
+  // Thông tin giao nhận hàng
+  receiverName    String
+  phoneNumber     String
+  shippingAddress String
+  note            String?     @db.Text
+
+  // Thanh toán & Trạng thái đơn hàng
+  totalAmount     Decimal     @db.Decimal(10, 0)
+  paymentMethod   String      @default("COD") // COD, VNPAY, MOMO
+  paymentStatus   String      @default("UNPAID") // UNPAID, PAID
+  orderStatus     String      @default("PENDING") // PENDING, PROCESSING, SHIPPING, DELIVERED, CANCELLED
+
+  // Danh sách sản phẩm mua
+  items           OrderItem[]
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+// Bảng Chi tiết từng sản phẩm trong Đơn hàng
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 0) // Lưu giá lúc mua (tránh việc sản phẩm đổi giá làm sai đơn cũ)
 }

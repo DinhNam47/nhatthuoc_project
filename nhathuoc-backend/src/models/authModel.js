@@ -34,6 +34,13 @@ const updateUser = async(id, data) =>{
 const deleteUser = async(id) =>{
     return prisma.user.delete({where: {id}})
 }
+const findByEmail = async (email) => {
+  return await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+};
 
 module.exports ={
     register,
@@ -42,5 +49,5 @@ module.exports ={
     getUserById,
     updateUser,
     deleteUser,
-    
+    findByEmail
 }
