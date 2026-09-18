@@ -1,0 +1,168 @@
+/* =========================================
+   LOGIN PAGE STYLES (REACT ADAPTED)
+   ========================================= */
+
+/* --- CẤU HÌNH MÀU SẮC --- */
+:root {
+    --primary: #00b09b;
+    --primary-grad: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+    --bg-color: #e0f2f1;
+    --white: #ffffff;
+    --text: #333;
+    --text-light: #666;
+    --radius: 20px;
+    --shadow: 0 20px 50px rgba(0, 176, 155, 0.15);
+}
+
+/* Reset cục bộ (Chỉ áp dụng trong phạm vi login page để an toàn) */
+.login-page-body * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* QUAN TRỌNG: 
+   Đã đổi từ 'body' sang '.login-page-body' 
+   để ngăn chặn lỗi "co dúm" giao diện trang chủ
+*/
+.login-page-body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 20%),
+                      radial-gradient(circle at 90% 80%, rgba(255,255,255,0.5) 0%, transparent 20%);
+    
+    /* Đảm bảo phủ kín màn hình */
+    min-height: 100vh;
+    width: 100%;
+    
+    /* Căn giữa nội dung */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* KHUNG BAO NGOÀI */
+.login-wrapper {
+    width: 100%;
+    max-width: 900px; /* Tăng chiều rộng để chứa 2 cột */
+    position: relative;
+}
+
+/* Nút Về Trang Chủ */
+.back-home {
+    position: absolute; top: -40px; left: 0;
+    color: var(--text-light); text-decoration: none;
+    font-size: 14px; font-weight: 600; transition: 0.3s;
+}
+.back-home:hover { color: var(--primary); transform: translateX(-5px); }
+
+/* CONTAINER CHÍNH (CHIA 2 CỘT) */
+.login-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex; /* Sử dụng Flexbox để chia cột */
+    overflow: hidden; /* Ẩn phần thừa của ảnh banner */
+    animation: slideUp 0.6s ease;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- CỘT TRÁI (FORM) --- */
+.login-left {
+    flex: 1; /* Chiếm 50% chiều rộng */
+    padding: 40px;
+    text-align: left;
+}
+
+.login-header h2 { font-size: 24px; color: var(--text); margin-bottom: 5px; font-weight: 800; }
+.login-header p { font-size: 14px; color: var(--text-light); margin-bottom: 30px; }
+
+/* STYLE FORM */
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.input-icon-wrap { position: relative; }
+.input-icon-wrap i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; transition: 0.3s; font-size: 16px; }
+.input-icon-wrap input { width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 12px; font-size: 14px; outline: none; transition: 0.3s; font-family: inherit; color: var(--text); }
+.input-icon-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0, 176, 155, 0.1); }
+.input-icon-wrap input:focus + i { color: var(--primary); }
+#toggle-pass { left: auto !important; right: 15px; cursor: pointer; }
+#toggle-pass:hover { color: var(--primary); }
+
+.form-options { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 25px; }
+.remember-check { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-light); font-weight: 500; }
+.remember-check input { accent-color: var(--primary); cursor: pointer; }
+.forgot-link { color: var(--primary); font-weight: 700; text-decoration: none; transition: 0.3s; }
+.forgot-link:hover { text-decoration: underline; }
+
+.btn-submit { width: 100%; padding: 14px; background: var(--primary-grad); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 176, 155, 0.4); }
+
+.divider { font-size: 12px; color: #aaa; margin: 25px 0; position: relative; text-align: center; }
+.divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 30%; height: 1px; background: #eee; }
+.divider::before { left: 0; } .divider::after { right: 0; }
+
+.social-login { display: flex; gap: 15px; margin-bottom: 25px; }
+.social-btn { flex: 1; padding: 10px; border: 1px solid #eee; background: white; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; font-size: 13px; color: var(--text); }
+.social-btn:hover { background: #f9f9f9; transform: translateY(-2px); }
+.social-btn.google i {
+    color: #db4437; /* Màu đỏ Google */
+}
+.social-btn.facebook i {
+    color: #4267B2; /* Màu xanh Facebook */
+}
+.register-text { font-size: 14px; color: var(--text-light); text-align: center; }
+.register-text a { color: var(--primary); font-weight: 700; text-decoration: none; }
+
+/* --- CỘT PHẢI (LOGO & BANNER) --- */
+.login-right {
+    flex: 1; /* Chiếm 50% chiều rộng */
+    background: var(--primary-grad); /* Nền gradient xanh ngọc */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+}
+
+/* Logo lớn */
+.logo-large {
+    font-size: 36px; font-weight: 800; margin-bottom: 15px;
+    display: flex; flex-direction: column; align-items: center;
+}
+.logo-large i { font-size: 50px; margin-bottom: 10px; }
+.logo-large span { color: #e0f7fa; }
+
+.brand-slogan { font-size: 15px; margin-bottom: 30px; line-height: 1.6; opacity: 0.9; }
+
+/* Ảnh banner */
+.banner-img {
+    width: 80%; max-width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    /* Tạo hiệu ứng nổi nhẹ */
+    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+    transition: 0.5s;
+}
+.banner-img:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05); }
+
+/* --- RESPONSIVE (Cho điện thoại) --- */
+@media (max-width: 768px) {
+    .login-container { flex-direction: column-reverse; /* Đảo ngược thứ tự: Banner lên trên, Form xuống dưới */ }
+    .login-right { padding: 30px; }
+    .logo-large { font-size: 28px; }
+    .logo-large i { font-size: 40px; }
+    .banner-img { display: none; /* Ẩn ảnh trên mobile cho gọn */ }
+    .login-left { padding: 30px 20px; }
+}
+.remember-check, 
+.register-text, 
+.register-text span {
+    color: #475569 !important; /* Màu xám đen Slate */
+    font-size: 14px;
+}
+
+/* Đảm bảo link "Đăng ký ngay" có màu xanh đặc trưng của MediGreen */
+.register-text a {
+    color: #10b981 !important;
+    font-weight: 700;
+}

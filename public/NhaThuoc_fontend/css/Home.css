@@ -1,0 +1,63 @@
+/* Container chứa 2 nút nằm ngang */
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Nút Xem chi tiết (Màu trắng viền xám) */
+.view-detail-btn {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.view-detail-btn:hover {
+    background: #f8fafc;
+    border-color: #10b981;
+    color: #10b981;
+}
+
+/* Nút Thêm vào giỏ (Màu xanh Gradient) */
+.add-cart-btn {
+    flex: 1.2;
+    background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.add-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 176, 155, 0.3);
+}
+
+/* Nút Xem chi tiết đơn giản cho phần TPCN */
+.view-detail-btn-simple {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: transparent;
+    border: 1.5px solid #10b981;
+    color: #10b981;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.view-detail-btn-simple:hover {
+    background: #10b981;
+    color: white;
+}
+
+/* =============================STYLE CART================== */

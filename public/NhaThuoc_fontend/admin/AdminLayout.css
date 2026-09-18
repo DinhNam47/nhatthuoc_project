@@ -1,0 +1,206 @@
+/* --- DARK THEME VARIABLES --- */
+:root {
+    --bg-admin-dark: #1e293b;    /* Màu nền chính (Xanh đen đậm) */
+    --sidebar-bg-dark: #2d3748;  /* Màu nền Sidebar (Xám xanh tối) */
+    --header-bg-dark: #2d3748;   /* Màu nền Header (Xám xanh tối) */
+    --text-light: #f8fafc;       /* Màu chữ chính (Trắng sáng) */
+    --text-muted-dark: #a0aec0;  /* Màu chữ phụ (Xám nhạt) */
+    --accent-teal: #10b981;      /* Màu nhấn (Xanh ngọc) */
+    --border-dark: #4a5568;      /* Màu đường viền tối */
+}
+
+.admin-layout {
+    display: flex;
+    background-color: var(--bg-admin-dark); /* Nền tối cho toàn bộ layout */
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light); /* Chữ mặc định màu trắng */
+}
+
+/* --- SIDEBAR TỐI MÀU --- */
+.admin-sidebar {
+    width: 260px;
+    background: var(--sidebar-bg-dark); /* Nền Sidebar tối */
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid var(--border-dark); /* Đường viền tối */
+    z-index: 1000;
+}
+
+.admin-logo-area {
+    padding: 25px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    color: var(--text-light); /* Logo màu trắng */
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.logo-icon {
+    color: var(--accent-teal); /* Icon logo màu xanh ngọc */
+    font-size: 22px;
+}
+
+.admin-nav {
+    flex: 1;
+    padding: 20px 10px;
+}
+
+.admin-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-muted-dark); /* Link màu xám nhạt */
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.admin-nav li.active a,
+.admin-nav li a:hover {
+    background: rgba(16, 185, 129, 0.15); /* Nền xanh ngọc nhạt khi active/hover */
+    color: var(--accent-teal); /* Chữ màu xanh ngọc */
+}
+
+.admin-nav li.active a i {
+    color: var(--accent-teal);
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-dark);
+}
+
+.sidebar-footer a {
+    color: var(--text-muted-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+.sidebar-footer a:hover { color: var(--text-light); }
+
+
+/* --- HEADER & MAIN CONTENT TỐI MÀU --- */
+.admin-main {
+    margin-left: 260px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-admin-dark); /* Nền tối cho phần nội dung chính */
+}
+
+.admin-top-header {
+    height: 70px;
+    background: var(--header-bg-dark); /* Nền Header tối */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    border-bottom: 1px solid var(--border-dark);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Thanh tìm kiếm tối màu */
+.admin-search-wrapper {
+    background: #1a202c; /* Nền input tối hơn nền header một chút */
+    padding: 8px 16px;
+    border-radius: 20px; /* Bo tròn */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 350px;
+    border: 1px solid var(--border-dark);
+}
+
+.admin-search-wrapper input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: var(--text-light); /* Chữ input màu trắng */
+}
+
+.admin-search-wrapper i {
+    color: var(--text-muted-dark);
+}
+
+/* Thông tin User tối màu */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.admin-notifications {
+    position: relative;
+    color: var(--text-light);
+    font-size: 20px;
+    cursor: pointer;
+}
+.notif-dot {
+    position: absolute; top: -2px; right: -2px; width: 8px; height: 8px;
+    background: #e53e3e; border-radius: 50%; border: 1px solid var(--header-bg-dark);
+}
+
+.admin-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.u-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    color: var(--text-light); /* Tên user màu trắng */
+}
+
+.u-role {
+    font-size: 12px;
+    margin: 0;
+    color: var(--text-muted-dark); /* Role màu xám nhạt */
+}
+
+.user-avatar-circle {
+    width: 38px;
+    height: 38px;
+    background: var(--accent-teal); /* Avatar nền xanh ngọc */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.logout-icon-btn {
+    background: transparent;
+    color: #e53e3e; /* Icon logout màu đỏ */
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.logout-icon-btn:hover { color: #fc8181; }
+
+.admin-body-content {
+    padding: 30px;
+    color: var(--text-light); /* Nội dung bên trong cũng màu trắng */
+}

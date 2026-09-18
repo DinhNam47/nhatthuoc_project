@@ -1,0 +1,211 @@
+/* --- 1. CẤU TRÚC CHUNG --- */
+.admin-container {
+    padding: 30px;
+    background-color: #1a202c; /* Nền tối thẫm */
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.admin-card {
+    background-color: #2d3748; /* Nền Card */
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.admin-card.no-padding { padding: 0; overflow: hidden; }
+
+/* LAYOUT GRID: Chia cột 70% - 30% */
+.layout-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    gap: 30px;
+}
+@media (max-width: 992px) { .layout-grid { grid-template-columns: 1fr; } }
+
+/* --- 2. INPUT STYLE (CHUẨN MÀU BẠN YÊU CẦU) --- */
+.dark-input {
+    background-color: rgb(45, 55, 72) !important; /* MÀU NỀN CỐ ĐỊNH */
+    border: 1px solid #4a5568 !important;
+    color: #ffffff !important;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.dark-input:focus {
+    border-color: #00d25b !important;
+    box-shadow: 0 0 0 3px rgba(0, 210, 91, 0.2);
+}
+
+.dark-input.disabled {
+    background-color: #1a202c !important;
+    color: #718096 !important;
+    cursor: not-allowed;
+    border: 1px dashed #4a5568 !important;
+}
+
+.dark-input::placeholder { color: #a0aec0; font-style: italic; }
+
+/* Select Box */
+select.dark-input option { background-color: rgb(45, 55, 72); color: white; padding: 10px; }
+
+/* --- 3. CÁC THÀNH PHẦN KHÁC --- */
+.form-row { display: flex; gap: 20px; margin-bottom: 20px; }
+.form-group { display: flex; flex-direction: column; width: 100%; }
+.half-width { flex: 0 0 48%; }
+.one-third { flex: 0 0 32%; }
+
+.red { color: #fc8181; }
+.green-text { color: #68d391 !important; font-weight: bold; }
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: white;
+}
+
+/* Nút Upload Ảnh */
+.upload-group { display: flex; gap: 10px; margin-top: 10px; }
+.btn-upload {
+    background-color: rgba(0, 210, 91, 0.1);
+    color: #00d25b;
+    border: 1px dashed #00d25b;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 5px;
+}
+.btn-upload:hover { background-color: #00d25b; color: white; }
+
+/* Khung Preview Ảnh */
+.main-preview {
+    height: 180px;
+    background-color: rgb(45, 55, 72);
+    border: 2px dashed #4a5568;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: #718096; overflow: hidden;
+}
+.main-preview img { width: 100%; height: 100%; object-fit: contain; }
+
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
+.small-text { font-size: 12px; }
+
+/* Titles & Divider */
+.page-title { color: #00d25b; margin: 0; text-transform: uppercase; font-size: 20px; }
+.page-subtitle { color: #a0aec0; font-size: 13px; margin-bottom: 25px; margin-top: 5px; }
+.section-title { color: #fff; font-size: 15px; border-bottom: 1px solid #4a5568; padding-bottom: 10px; margin-bottom: 20px; margin-top: 0; }
+.section-header-lg { color: #00d25b; font-size: 18px; margin-bottom: 15px; margin-top: 40px; }
+.divider { height: 1px; background: #4a5568; margin: 30px 0; }
+
+/* Button Submit */
+.btn-submit {
+    background-color: #00d25b; color: white; font-weight: bold;
+    padding: 15px; border: none; border-radius: 6px; width: 100%;
+    margin-top: 30px; cursor: pointer; font-size: 15px; transition: 0.3s;
+}
+.btn-submit:hover { background-color: #00a849; }
+
+/* Table */
+.custom-table { width: 100%; border-collapse: collapse; font-size: 14px; color: #e2e8f0; }
+.custom-table thead tr { background-color: rgb(45, 55, 72); text-align: left; }
+.custom-table th { padding: 15px; border-bottom: 2px solid #00d25b; color: #a0aec0; text-transform: uppercase; font-size: 12px; }
+.custom-table td { padding: 12px 15px; border-bottom: 1px solid #4a5568; vertical-align: middle; }
+.text-bold-green { color: #00d25b; font-weight: bold; }
+.img-cell { width: 45px; height: 45px; border: 1px solid #4a5568; border-radius: 4px; overflow: hidden; }
+.img-cell img { width: 100%; height: 100%; object-fit: cover; }
+.btn-icon.delete { background: rgba(241, 65, 108, 0.2); color: #f1416c; border: none; width: 35px; height: 35px; border-radius: 4px; cursor: pointer; }
+.btn-icon.delete:hover { background: #f1416c; color: white; }
+/* --- CSS PREVIEW ẢNH MỚI (NHỎ & ĐẸP) --- */
+
+/* Khung chứa danh sách ảnh */
+.preview-container-grid {
+    display: flex;
+    flex-wrap: wrap; /* Tự xuống dòng nếu nhiều ảnh */
+    gap: 10px; /* Khoảng cách giữa các ảnh */
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #1a202c; /* Nền tối trùng màu web */
+    border: 1px dashed #4a5568;
+    border-radius: 6px;
+    min-height: 90px; /* Chiều cao tối thiểu */
+    align-items: center; /* Căn giữa dọc */
+}
+
+/* Từng ô ảnh nhỏ (Thumbnail) */
+.mini-preview {
+    width: 70px;  /* <--- Kích thước nhỏ */
+    height: 70px; /* <--- Kích thước nhỏ */
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #4a5568;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+/* Hiệu ứng khi di chuột vào ảnh */
+.mini-preview:hover {
+    transform: scale(1.05); /* Phóng to nhẹ */
+    border-color: #00d25b;
+}
+
+/* Ảnh bên trong */
+.mini-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cắt ảnh vừa khung, không bị méo */
+}
+
+/* Chữ khi chưa có ảnh */
+.no-image-placeholder {
+    width: 100%;
+    text-align: center;
+    color: #718096;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Căn giữa nút upload */
+.justify-center {
+    justify-content: center;
+}
+/* Nút Sửa (Màu vàng cam) */
+.btn-icon.edit {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+    border: none;
+    width: 35px; height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px; /* Cách nút xóa ra */
+    transition: 0.2s;
+}
+
+.btn-icon.edit:hover {
+    background: #f59e0b;
+    color: white;
+}
+.btn-mini-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
